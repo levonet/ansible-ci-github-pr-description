@@ -1,0 +1,37 @@
+---
+galaxy_info:
+  role_name: ci_github_pr_description
+  author: Pavlo Bashynskyi
+  description: Add build information to Pull Request description.
+  license: MIT
+  min_ansible_version: 2.3
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: opensuse
+      versions:
+        - all
+    - name: SLES
+      versions:
+        - all
+    - name: MacOSX
+      versions:
+        - all
+  cloud_platforms: []
+  galaxy_tags: 
+   - ci
+   - cd
+   - jira
+   - github
+
+dependencies: []

@@ -1,0 +1,42 @@
+- set_fact:
+    ci_github_jira_task: "{{ ci_github_branch | regex_search(ci_github_jira_task_filter) }}"
+  when: ci_github_jira_task_url != "" and ci_github_branch != ""
+
+- name: Found Jira task
+  debug:
+    msg: "{{ ci_github_jira_task }}"
+  when: ci_github_jira_task != ""
+
+- name: Get info about pull request
+  uri:
+    url: "{{ ci_github_api }}/repos/{{ ci_github_owner }}/{{ ci_github_repo }}/pulls/{{ ci_github_pr_number }}"
+    headers:
+      Accept: application/vnd.github.symmetra-preview+json
+    method: GET
+    user: '{{ ci_github_username }}'
+    password: '{{ ci_github_password }}'
+    force_basic_auth: yes
+  register: ci_github_pr_info
+  when: ci_github_pr_number != ""
+
+- set_fact:
+    ci_github_message:
+      body: |
+        {{ ci_github_pr_info.json.body | regex_replace('(?s)<!-- CI: BEGIN -->.*<!-- CI: END -->') }}<!-- CI: BEGIN -->
+        {% if ci_github_jira_task_url != "" and ci_github_jira_task != "" %}{{ ci_github_jira_message }}{% endif %}
+        {{ ci_github_message_body }}
+        <!-- CI: END -->
+  when: ci_github_pr_number != ""
+
+- name: Update a pull request
+  uri:
+    url: "{{ ci_github_api }}/repos/{{ ci_github_owner }}/{{ ci_github_repo }}/pulls/{{ ci_github_pr_number }}"
+    headers:
+      Accept: application/vnd.github.symmetra-preview+json
+    method: PATCH
+    body: "{{ ci_github_message }}"
+    body_format: json
+    user: '{{ ci_github_username }}'
+    password: '{{ ci_github_password }}'
+    force_basic_auth: yes
+  when: ci_github_pr_number != ""

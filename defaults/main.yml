@@ -1,0 +1,18 @@
+---
+ci_github_api: https://api.github.com
+# Define it in playbook:
+ci_github_username:
+ci_github_password:
+ci_github_owner:
+ci_github_repo:
+ci_github_pr_number:
+# Optional:
+ci_github_branch: ""
+ci_github_jira_task_filter: (TODO|BUGS)-\d+
+ci_github_jira_task_url: ""
+ci_github_message_body: ""
+
+# Don't change it:
+ci_github_jira_task: ""
+ci_github_jira_message: |
+  * Jira: [{{ ci_github_jira_task }}]({{ ci_github_jira_task_url + ci_github_jira_task }})
