@@ -44,7 +44,7 @@ And run in Jenkins:
 ansible-playbook myplaybook.yml -e github_branch="${CHANGE_BRANCH}" -e github_pr_number="${CHANGE_ID}"
 ```
 
-As a result, you will receive a comment in Jira task:
+As a result, you will receive a description in Pull Request:
 
 > Old description information if exists
 > * Jira: [TODO-40](#)
