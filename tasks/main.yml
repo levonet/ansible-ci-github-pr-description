@@ -1,11 +1,15 @@
-- set_fact:
+- name: Check Jira task in branch name
+  set_fact:
     ci_github_jira_task: "{{ ci_github_branch | regex_search(ci_github_jira_task_filter) }}"
-  when: ci_github_jira_task_url != "" and ci_github_branch != ""
+  when:
+  - ci_github_jira_task_url | length > 0
+  - ci_github_branch | length > 0
 
 - name: Found Jira task
   debug:
     msg: "{{ ci_github_jira_task }}"
-  when: ci_github_jira_task != ""
+  when:
+  - ci_github_jira_task | length > 0
 
 - name: Get info about pull request
   uri:
@@ -17,16 +21,19 @@
     password: '{{ ci_github_password }}'
     force_basic_auth: yes
   register: ci_github_pr_info
-  when: ci_github_pr_number != ""
+  when:
+  - ci_github_pr_number | length > 0
 
-- set_fact:
+- name: Set message
+  set_fact:
     ci_github_message:
       body: |
-        {{ ci_github_pr_info.json.body | regex_replace('(?s)<!-- CI: BEGIN -->.*<!-- CI: END -->') }}<!-- CI: BEGIN -->
-        {% if ci_github_jira_task_url != "" and ci_github_jira_task != "" %}{{ ci_github_jira_message }}{% endif %}
+        {{ ci_github_pr_info.json.body | regex_replace(ci_github_wrapper_regex) }}{{ ci_github_wrapper_begin }}
+        {% if ci_github_jira_task_url | length > 0 and ci_github_jira_task | length > 0 %}{{ ci_github_jira_message }}{% endif %}
         {{ ci_github_message_body }}
-        <!-- CI: END -->
-  when: ci_github_pr_number != ""
+        {{ ci_github_wrapper_end }}
+  when:
+  - ci_github_pr_number | length > 0
 
 - name: Update a pull request
   uri:
@@ -39,4 +46,5 @@
     user: '{{ ci_github_username }}'
     password: '{{ ci_github_password }}'
     force_basic_auth: yes
-  when: ci_github_pr_number != ""
+  when:
+  - ci_github_pr_number | length > 0
