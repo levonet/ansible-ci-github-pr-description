@@ -15,8 +15,8 @@ ci_github_jira_task_filter: (TODO|BUGS)-\d+
 ci_github_jira_task_url: ""
 
 # Don't change it:
-ci_github_wrapper_begin: "<!-- CI: BEGIN {{ (ci_github_message_id != '') | ternary('ID=' + ci_github_message_id, '') }}-->"
-ci_github_wrapper_end: "<!-- CI: END {{ (ci_github_message_id != '') | ternary('ID=' + ci_github_message_id, '') }}-->"
+ci_github_wrapper_begin: "<!-- CI: BEGIN {{ (ci_github_message_id | length > 0) | ternary('ID=' + ci_github_message_id, '') }}-->"
+ci_github_wrapper_end: "<!-- CI: END {{ (ci_github_message_id | length > 0) | ternary('ID=' + ci_github_message_id, '') }}-->"
 ci_github_wrapper_regex: "(?s){{ ci_github_wrapper_begin }}.*{{ ci_github_wrapper_end }}"
 ci_github_wrapper_: ""
 ci_github_jira_task: ""
