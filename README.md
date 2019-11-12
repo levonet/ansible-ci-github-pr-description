@@ -1,4 +1,5 @@
 # CI: Add build information to Pull Request
+[![Build Status](https://travis-ci.org/levonet/ansible-ci-github-pr-description.svg?branch=master)](https://travis-ci.org/levonet/ansible-ci-github-pr-description)
 
 Add build information to Pull Request description.
 
@@ -12,8 +13,9 @@ Add build information to Pull Request description.
 - `ci_github_pr_number` (required): Github Pull Request number.
 - `ci_github_branch` (optional): Github branch name.
 - `ci_github_jira_task_url` (optional): Github repository url.
-- `ci_github_jira_task_filter` (optional): Regexp filter for Jira task from github branch. For example: `(TODO|BUGS)-\d+`.
-- `ci_github_message_body` (optional): Some text messages with CI information.
+- `ci_github_jira_task_filter` (optional): Regexp filter for Jira task from github branch.  
+  For example: `(TODO|BUGS)-\d+`.
+- `ci_github_message_body` (required): Some text messages with CI information.
 
 ## Example Playbook
 
