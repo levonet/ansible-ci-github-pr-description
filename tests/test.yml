@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+  roles:
+  - role: ../..
+    ci_github_username: test
+    ci_github_password: test
+    ci_github_branch: test
+    ci_github_pr_number: "123"
+    ci_github_owner: test
+    ci_github_repo: test
+    ci_github_jira_task_filter: (feat|fix|docs|style|refactor|test|chore)-\d+
+    ci_github_jira_task_url: https://test.atlassian.net/browse/
+    ci_github_message_body: |
+      * Test
