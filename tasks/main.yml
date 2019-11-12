@@ -22,10 +22,10 @@
 - set_fact:
     ci_github_message:
       body: |
-        {{ ci_github_pr_info.json.body | regex_replace('(?s)<!-- CI: BEGIN -->.*<!-- CI: END -->') }}<!-- CI: BEGIN -->
+        {{ ci_github_pr_info.json.body | regex_replace(ci_github_wrapper_regex) }}{{ ci_github_wrapper_begin }}
         {% if ci_github_jira_task_url != "" and ci_github_jira_task != "" %}{{ ci_github_jira_message }}{% endif %}
         {{ ci_github_message_body }}
-        <!-- CI: END -->
+        {{ ci_github_wrapper_end }}
   when: ci_github_pr_number != ""
 
 - name: Update a pull request

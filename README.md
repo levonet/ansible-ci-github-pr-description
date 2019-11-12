@@ -16,6 +16,7 @@ Add build information to Pull Request description.
 - `ci_github_jira_task_filter` (optional): Regexp filter for Jira task from github branch.  
   For example: `(TODO|BUGS)-\d+`.
 - `ci_github_message_body` (required): Some text messages with CI information.
+- `ci_github_message_id` (optional): Unique text messages id. It needs if in a Pull Request description has more than one message.
 
 ## Example Playbook
 
