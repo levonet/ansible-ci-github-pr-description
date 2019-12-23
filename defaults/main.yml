@@ -21,5 +21,7 @@ ci_github_wrapper_regex: "(?s){{ ci_github_wrapper_begin }}.*{{ ci_github_wrappe
 ci_github_wrapper_: ""
 ci_github_jira_task: ""
 ci_github_jira_message: |
-  {% if ci_github_message_id | length > 0 %}## {{ ci_github_message_id }}{% endif %}
+  {% if ci_github_message_id | length > 0 %}
+  ## {{ ci_github_message_id | upper }}
+  {% endif %}
   * Jira: [{{ ci_github_jira_task }}]({{ ci_github_jira_task_url + ci_github_jira_task }})
